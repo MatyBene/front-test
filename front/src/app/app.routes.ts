@@ -6,5 +6,7 @@ import { ProfilePage } from './pages/profile-page/profile-page';
 export const routes: Routes = [
     {path: '', component: HomePage},
     {path: 'login', component: LoginPage},
-    {path: 'profile', component: ProfilePage}
+
+    
+    {path: 'members/profile', component: ProfilePage}
 ];

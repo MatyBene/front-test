@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -14,7 +15,11 @@ export class LoginPage {
   errorMessage: string = '';
   
 
-  constructor(private fb: FormBuilder, private authService: AuthService){
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router
+  ){
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -29,6 +34,7 @@ export class LoginPage {
       this.authService.login(username, password).subscribe({
         next: (data) => {
           this.isLoading = false;
+          this.router.navigate(['/profile']);
           alert('El usuario ingreso correctamente');
           console.log('Login exitoso', data);
         },
