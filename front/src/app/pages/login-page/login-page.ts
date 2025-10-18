@@ -10,6 +10,9 @@ import { AuthService } from '../../services/auth-service';
 })
 export class LoginPage {
   loginForm: FormGroup;
+  isLoading = false;
+  errorMessage: string = '';
+  
 
   constructor(private fb: FormBuilder, private authService: AuthService){
     this.loginForm = this.fb.group({
@@ -19,15 +22,21 @@ export class LoginPage {
   }
 
   onSubmit(){
-    if(this.loginForm.valid){
+    if(this.loginForm.valid && !this.isLoading){
+      this.isLoading = true;
       const {username, password} = this.loginForm.value;
 
       this.authService.login(username, password).subscribe({
         next: (data) => {
+          this.isLoading = false;
           alert('El usuario ingreso correctamente');
           console.log('Login exitoso', data);
         },
-        error: (e) => {console.log('Error: ', e)}
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error.message;
+          console.log('Error: ', error.error.message);
+        }
       })
     }
   }
