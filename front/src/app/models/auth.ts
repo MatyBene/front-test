@@ -6,3 +6,8 @@ export interface LoginRequest{
 export interface LoginResponse{
     token: string
 }
+
+export interface TokenPayLoad {
+    sub: string,
+    rol: Array<{authority: string}>
+}

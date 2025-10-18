@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LoginRequest, LoginResponse } from '../models/auth';
+import { LoginRequest, LoginResponse, TokenPayLoad } from '../models/auth';
 import { tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,32 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  getToken(){
-    
+  getToken(): string | null{
+    return localStorage.getItem('token');
+  }
+
+  getDecodedToken(): TokenPayLoad | null {
+    const token = this.getToken();
+    if(!token) return null;
+
+    try {
+      return jwtDecode<TokenPayLoad>(token);
+    } catch (e) {
+      console.error('Error al decodificar el token: ', e);
+      return null;
+    }
+  }
+
+  getUserRole(): 'MEMBER' | 'INSTRUCTOR' | 'ADMIN' | null {
+    const decodedToken = this.getDecodedToken();
+
+    const authority = decodedToken?.rol[0].authority;
+
+    if (authority === 'ROLE_MEMBER') return 'MEMBER';
+    if (authority === 'ROLE_INSTRUCTOR') return 'INSTRUCTOR';
+    if (authority === 'ROLE_ADMIN') return 'ADMIN';
+
+    return null;
   }
 
   logout(): void {
