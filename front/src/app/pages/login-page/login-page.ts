@@ -34,8 +34,8 @@ export class LoginPage {
       this.authService.login(username, password).subscribe({
         next: (data) => {
           this.isLoading = false;
-          this.router.navigate(['/profile']);
           alert('El usuario ingreso correctamente');
+          this.router.navigate(['/members/profile']);
           console.log('Login exitoso', data);
         },
         error: (error) => {

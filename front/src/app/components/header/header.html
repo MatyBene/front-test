@@ -1,8 +1,29 @@
 <header>
     <nav>
         <ul>
-            <li><a routerLink="/">Inicio</a></li>
-            <li><a routerLink="/login">Inicio de sesion</a></li>
+            <li>
+                <a routerLink="/">Inicio</a>
+            </li>
+            
+            @if (!authService.isLoggedIn()) {
+                <li>
+                    <a routerLink="/login">Iniciar sesión</a>
+                </li>
+            }
+            
+            @if (authService.isLoggedIn()) {
+                <li>
+                    <a routerLink="/members/profile">Perfil</a>
+                </li>
+                <li>
+                    <button (click)="logout()">Cerrar sesión</button>
+                </li>
+            }
         </ul>
     </nav>
 </header>
+
+
+  
+
+
