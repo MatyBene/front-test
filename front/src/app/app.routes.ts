@@ -9,6 +9,5 @@ export const routes: Routes = [
     {path: '', component: HomePage},
     {path: 'login', component: LoginPage, canActivate: [guestGuard]},
 
-
     {path: 'members/profile', component: ProfilePage, canActivate: [authGuard]}
 ];
