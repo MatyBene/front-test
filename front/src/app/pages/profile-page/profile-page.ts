@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth-service';
 export class ProfilePage implements OnInit{
   decodedToken!: TokenPayLoad | null;
 
-  constructor(private authService: AuthService){}
+  constructor(public authService: AuthService){}
 
   ngOnInit(): void {
     this.decodedToken = this.authService.getDecodedToken();
