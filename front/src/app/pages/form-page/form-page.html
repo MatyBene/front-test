@@ -1,43 +1,92 @@
-<form>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <fieldset>
         <label for="name">Nombre</label>
-        <input type="text" id="name">
+        <input type="text" id="name" formControlName="name">
+        @if (name?.invalid && name?.touched) {
+            <p>El nombre es obligatorio</p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="lastname">Apellido</label>
-        <input type="text" id="lastname">
+        <input type="text" id="lastname" formControlName="lastname">
+        @if (lastname?.invalid && lastname?.touched) {
+            <p>El apellido es obligatorio</p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="dni">DNI</label>
-        <input type="text" id="dni">
+        <input type="text" id="dni" formControlName="dni">
+        @if (dni?.hasError('required') && dni?.touched) {
+            <p>El dni es obligatorio</p>
+        } @else if (dni?.hasError('minlength')) {
+            <p>Debe tener minimo 8 caracteres</p>
+        }
+        @if (serverErrors['dni']) {
+            <p>
+                {{serverErrors['dni']}}
+            </p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="birthdate">Fecha de nacimiento</label>
-        <input type="date" id="birthdate">
+        <input type="date" id="birthdate" formControlName="birthdate">
+        @if (birthdate?.hasError('required') && birthdate?.touched) {
+            <p>La fecha de nacimiento es obligatoria</p>
+        } @else if(birthdate?.hasError('pattern')) {
+            <p>Formato de fecha invalido</p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="phone">Celular</label>
-        <input type="text" id="phone">
+        <input type="text" id="phone" formControlName="phone">
+        @if (phone?.hasError('required') && phone?.touched) {
+            <p>El numero de contacto es obligatorio</p>
+        } @else if (phone?.hasError('maxlength')) {
+            <p>Debe tener maximo 15 caracteres</p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="email">Email</label>
-        <input type="email" id="email">
+        <input type="email" id="email" formControlName="email">
+        @if (email?.hasError('required') && email?.touched) {
+            <p>El email es obligatorio</p>
+        } @else if (email?.hasError('email')) {
+            <p>El email debe tener un formato valido</p>
+        }
+        @if (serverErrors['email']) {
+            <p>
+                {{serverErrors['email']}}
+            </p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="username">Nombre de usuario</label>
-        <input type="text" id="username">
+        <input type="text" id="username" formControlName="username">
+        @if (username?.invalid && username?.touched) {
+            <p>El nombre de usuario es obligatorio</p>
+        }
+        @if (serverErrors['username']) {
+            <p>
+                {{serverErrors['username']}}
+            </p>
+        }
     </fieldset>
 
     <fieldset>
         <label for="password">Contraseña</label>
-        <input type="password" id="password">
+        <input type="password" id="password" formControlName="password">
+        @if (password?.hasError('required') && password?.touched) {
+            <p>La contraseña es obligatoria</p>
+        } @else if (password?.hasError('pattern')) {
+            <p>La contraseña debe contener al menos: 1 mayúscula, 1 minúscula, 1 número, 1 carácter especial y no tener espacios</p>
+        }
     </fieldset>
 
-    <button>Crear cuenta</button>
+    <button [disabled]="userForm.invalid">Crear cuenta</button>
 </form>
