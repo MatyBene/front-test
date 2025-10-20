@@ -2,12 +2,12 @@
     
     <fieldset>
         <label for="username">Nombre de usuario</label>
-        <input type="text" id="username" placeholder="Usuario" formControlName="username">
+        <input type="text" id="username" placeholder="Ingresa tu usuario" formControlName="username">
     </fieldset>
 
     <fieldset>
         <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="Contraseña" formControlName="password">
+        <input type="password" id="password" placeholder="Ingresa tu contraseña" formControlName="password">
     </fieldset>
 
     @if (errorMessage) {
@@ -17,6 +17,6 @@
     }
 
     <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+        {{ isLoading ? 'INICIANDO SESIÓN...' : 'INICIAR SESIÓN' }}
     </button>
 </form>
